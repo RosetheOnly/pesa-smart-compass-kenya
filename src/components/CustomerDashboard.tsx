@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -49,7 +48,7 @@ export const CustomerDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeInstallments}</div>
-            <p className="text-xs text-muted-foreground">Active payments</p>
+            <p className="text-xs text-muted-foreground">{t.activePlatments}</p>
           </CardContent>
         </Card>
 
@@ -60,7 +59,7 @@ export const CustomerDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">85%</div>
-            <p className="text-xs text-muted-foreground">Savings goal</p>
+            <p className="text-xs text-muted-foreground">{t.savingsGoal}</p>
           </CardContent>
         </Card>
       </div>

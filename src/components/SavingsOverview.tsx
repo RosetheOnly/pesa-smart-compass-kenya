@@ -23,7 +23,7 @@ export const SavingsOverview = () => {
         <div className="space-y-4">
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">Goal Progress</span>
+              <span className="text-sm font-medium">{t.goalProgress}</span>
               <span className="text-sm text-muted-foreground">{Math.round(progress)}%</span>
             </div>
             <Progress value={progress} className="h-3" />
@@ -37,7 +37,7 @@ export const SavingsOverview = () => {
             <div className="p-3 bg-green-50 rounded-lg">
               <div className="flex items-center">
                 <Target className="h-4 w-4 text-green-600 mr-2" />
-                <span className="text-sm font-medium">Monthly Target</span>
+                <span className="text-sm font-medium">{t.monthlyTarget}</span>
               </div>
               <p className="text-lg font-bold text-green-600">KSH 5,000</p>
             </div>
@@ -45,13 +45,13 @@ export const SavingsOverview = () => {
             <div className="p-3 bg-blue-50 rounded-lg">
               <div className="flex items-center">
                 <TrendingUp className="h-4 w-4 text-blue-600 mr-2" />
-                <span className="text-sm font-medium">This Month</span>
+                <span className="text-sm font-medium">{t.thisMonth}</span>
               </div>
               <p className="text-lg font-bold text-blue-600">KSH 4,200</p>
             </div>
           </div>
 
-          <Button className="w-full">Add to Savings</Button>
+          <Button className="w-full">{t.addToSavings}</Button>
         </div>
       </CardContent>
     </Card>

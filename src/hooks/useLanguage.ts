@@ -58,6 +58,32 @@ const translations = {
     congratulations: "Congratulations on your savings progress!",
     keepGoing: "Keep going! You're doing great!",
     almostThere: "Almost there! Stay focused on your goals!",
+    // New translations
+    dailyEncouragement: "Daily Encouragement",
+    goalProgress: "Goal Progress",
+    monthlyTarget: "Monthly Target",
+    thisMonth: "This Month",
+    addToSavings: "Add to Savings",
+    activePlatments: "Active payments",
+    savingsGoal: "Savings goal",
+    businessIdentity: "Business Identity",
+    verified: "Verified",
+    businessId: "Unique Business ID",
+    shareId: "Share this ID with customers for easy identification",
+    businessAccount: "Business Account",
+    customerAccount: "Customer Account",
+    manageProducts: "Manage your products and grow your business",
+    saveSmart: "Save smart and buy on flexible installments",
+    backToOptions: "← Back to options",
+    activeProducts: "Active products",
+    totalCustomers: "Total customers",
+    revenue: "Revenue",
+    verificationCode: "Verification Code",
+    enterCode: "Enter the code sent to your email/phone",
+    resendCode: "Resend Code",
+    verify: "Verify",
+    sendingCode: "Sending code...",
+    verifying: "Verifying...",
   },
   sw: {
     appName: "Pesa Smart Plan Kenya",
@@ -109,14 +135,43 @@ const translations = {
     congratulations: "Hongera kwa maendeleo yako ya akiba!",
     keepGoing: "Endelea! Unafanya vizuri!",
     almostThere: "Karibu kumaliza! Zingatia malengo yako!",
+    // New translations
+    dailyEncouragement: "Msaada wa Kila Siku",
+    goalProgress: "Maendeleo ya Lengo",
+    monthlyTarget: "Lengo la Kila Mwezi",
+    thisMonth: "Mwezi Huu",
+    addToSavings: "Ongeza kwenye Akiba",
+    activePlatments: "Malipo yanayoendelea",
+    savingsGoal: "Lengo la akiba",
+    businessIdentity: "Utambulisho wa Biashara",
+    verified: "Imethibitishwa",
+    businessId: "Namba ya Kipekee ya Biashara",
+    shareId: "Shiriki namba hii na wateja kwa utambuzi rahisi",
+    businessAccount: "Akaunti ya Biashara",
+    customerAccount: "Akaunti ya Mteja",
+    manageProducts: "Simamia bidhaa zako na kukuza biashara yako",
+    saveSmart: "Okoa kwa busara na nunua kwa malipo ya awamu",
+    backToOptions: "← Rudi kwenye chaguzi",
+    activeProducts: "Bidhaa zinazoendelea",
+    totalCustomers: "Jumla ya wateja",
+    revenue: "Mapato",
+    verificationCode: "Namba ya Uthibitisho",
+    enterCode: "Ingiza namba iliyotumwa kwa barua pepe/simu yako",
+    resendCode: "Tuma Tena Namba",
+    verify: "Thibitisha",
+    sendingCode: "Inatuma namba...",
+    verifying: "Inathibitisha...",
   }
 };
 
 export const useLanguage = create<LanguageState>((set, get) => ({
   language: 'en',
-  setLanguage: (lang) => set({ 
-    language: lang,
-    t: translations[lang]
-  }),
+  setLanguage: (lang) => {
+    console.log('Setting language to:', lang);
+    set({ 
+      language: lang,
+      t: translations[lang]
+    });
+  },
   t: translations.en,
 }));

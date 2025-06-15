@@ -1,9 +1,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEncouragementMessages } from "@/hooks/useEncouragementMessages";
+import { useLanguage } from "@/hooks/useLanguage";
 import { Heart, Quote } from "lucide-react";
 
 export const EncouragementCard = () => {
+  const { t } = useLanguage();
   const message = useEncouragementMessages();
 
   if (!message) return null;
@@ -13,7 +15,7 @@ export const EncouragementCard = () => {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center text-lg">
           <Heart className="h-5 w-5 mr-2 text-red-500" />
-          Daily Encouragement
+          {t.dailyEncouragement}
         </CardTitle>
       </CardHeader>
       <CardContent>

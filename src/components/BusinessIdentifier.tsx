@@ -27,13 +27,13 @@ export const BusinessIdentifier = () => {
       <CardHeader className="flex flex-row items-center space-y-0 pb-2">
         <div className="flex items-center space-x-2">
           <Building2 className="h-5 w-5" />
-          <CardTitle className="text-lg">Business Identity</CardTitle>
+          <CardTitle className="text-lg">{t.businessIdentity}</CardTitle>
         </div>
-        <Badge variant="secondary" className="ml-auto">Verified</Badge>
+        <Badge variant="secondary" className="ml-auto">{t.verified}</Badge>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <Label htmlFor="businessName">Business Name</Label>
+          <Label htmlFor="businessName">{t.businessName}</Label>
           <Input
             id="businessName"
             value={businessName}
@@ -42,7 +42,7 @@ export const BusinessIdentifier = () => {
         </div>
         
         <div>
-          <Label htmlFor="businessId">Unique Business ID</Label>
+          <Label htmlFor="businessId">{t.businessId}</Label>
           <div className="flex items-center space-x-2">
             <Input
               id="businessId"
@@ -60,7 +60,7 @@ export const BusinessIdentifier = () => {
             </Button>
           </div>
           <p className="text-xs text-muted-foreground mt-1">
-            Share this ID with customers for easy identification
+            {t.shareId}
           </p>
         </div>
       </CardContent>
