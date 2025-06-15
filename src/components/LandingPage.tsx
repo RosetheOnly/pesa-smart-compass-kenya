@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AuthForm } from "@/components/AuthForm";
+import { EnhancedAuthForm } from "@/components/EnhancedAuthForm";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { CreditCard, Building2, Users } from "lucide-react";
 import { LandingHeader } from "@/components/landing/LandingHeader";
@@ -41,11 +41,17 @@ export const LandingPage = ({ userType, setUserType, onAuthenticated }: LandingP
                   }
                 </div>
                 <CardTitle className="text-2xl font-bold text-gray-900">
-                  {userType === "business" ? "Business Registration" : "Customer Registration"}
+                  {userType === "business" ? "Business Account" : "Customer Account"}
                 </CardTitle>
+                <p className="text-gray-600 mt-2">
+                  {userType === "business" 
+                    ? "Manage your products and grow your business" 
+                    : "Save smart and buy on flexible installments"
+                  }
+                </p>
               </CardHeader>
               <CardContent className="px-10 pb-10">
-                <AuthForm
+                <EnhancedAuthForm
                   userType={userType}
                   onAuthenticated={onAuthenticated}
                 />
