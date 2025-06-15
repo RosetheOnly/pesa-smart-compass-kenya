@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,6 +49,8 @@ export const VerificationForm = ({
   const sendVerificationCode = async () => {
     setIsSending(true);
     try {
+      console.log("Sending verification code...", { verificationType, email, phone });
+      
       const { data, error } = await supabase.functions.invoke('send-verification', {
         body: {
           email: verificationType === "email" ? email : undefined,
@@ -56,36 +59,38 @@ export const VerificationForm = ({
         },
       });
 
+      console.log("Function response:", { data, error });
+
       if (error) {
         console.error("Error sending verification code:", error);
-        toast.error("Failed to send verification code");
+        toast.error("Failed to send verification code. Check console for details.");
         return;
       }
 
-      console.log("Verification code sent successfully");
       const target = verificationType === "email" ? email : phone;
       setLastSentMethod(verificationType);
       
-      // Show appropriate message based on whether external services are configured
+      // Show success message
       toast.success(
-        `Verification code sent to ${target}`,
+        `Verification code sent!`,
         {
-          description: verificationType === "email" 
-            ? "Check your email inbox (including spam folder)" 
-            : "Check your SMS messages"
+          description: `Check your ${verificationType === "email" ? "email inbox (including spam)" : "SMS messages"} or browser console`
         }
       );
       
-      // Also show console message for demo purposes
+      // Show console instruction
       toast.info(
-        "Demo Mode: Check the browser console for the verification code",
-        { duration: 8000 }
+        "🔍 Check browser console (F12) for your verification code",
+        { 
+          duration: 10000,
+          description: "The code will appear in the Console tab"
+        }
       );
       
       startCooldown();
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Failed to send verification code");
+      console.error("Verification send error:", error);
+      toast.error("Failed to send verification code. Check console for details.");
     } finally {
       setIsSending(false);
     }
@@ -105,6 +110,8 @@ export const VerificationForm = ({
     setIsVerifying(true);
     
     try {
+      console.log("Verifying code...", { otp, verificationType });
+      
       const { data, error } = await supabase.functions.invoke('verify-code', {
         body: {
           email: verificationType === "email" ? email : undefined,
@@ -114,21 +121,23 @@ export const VerificationForm = ({
         },
       });
 
+      console.log("Verification response:", { data, error });
+
       if (error) {
         console.error("Error verifying code:", error);
-        toast.error("Failed to verify code");
+        toast.error("Failed to verify code. Check console for details.");
         return;
       }
 
-      if (data.success) {
+      if (data?.success) {
         toast.success("Verification successful!");
         onVerificationComplete();
       } else {
-        toast.error(data.message || "Invalid verification code");
+        toast.error(data?.message || "Invalid verification code");
       }
     } catch (error) {
       console.error("Verification error:", error);
-      toast.error("Verification failed. Please try again.");
+      toast.error("Verification failed. Check console for details.");
     } finally {
       setIsVerifying(false);
     }
@@ -136,6 +145,7 @@ export const VerificationForm = ({
 
   // Auto-send verification code on component mount
   useEffect(() => {
+    console.log("VerificationForm mounted, sending code automatically");
     sendVerificationCode();
   }, []);
 
@@ -168,10 +178,7 @@ export const VerificationForm = ({
                 <span className="text-sm text-blue-800 font-medium">Code Sent!</span>
               </div>
               <p className="text-xs text-blue-600">
-                {verificationType === "email" 
-                  ? "Check your email (and spam folder) or browser console" 
-                  : "Check your SMS messages or browser console"
-                }
+                Check your {verificationType === "email" ? "email (and spam folder)" : "SMS messages"} or press F12 → Console
               </p>
             </div>
           )}
@@ -235,8 +242,8 @@ export const VerificationForm = ({
             <div className="flex items-start">
               <AlertCircle className="h-4 w-4 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
               <div className="text-xs text-yellow-800">
-                <p className="font-medium mb-1">Demo Mode Active</p>
-                <p>For testing, verification codes are shown in the browser console (F12 → Console tab)</p>
+                <p className="font-medium mb-1">🔍 Find Your Code</p>
+                <p>Press <strong>F12</strong> → Click <strong>Console</strong> tab → Look for your verification code</p>
               </div>
             </div>
           </div>
