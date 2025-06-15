@@ -2,9 +2,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/hooks/useLanguage";
 import { Shield, Lock, CheckCircle, AlertTriangle, CreditCard, FileText } from "lucide-react";
 
 export const SecurityDashboard = () => {
+  const { t } = useLanguage();
+  
   const securityStats = [
     { label: "Protected Purchases", value: "12", icon: Shield },
     { label: "Escrow Holdings", value: "KSH 45,000", icon: Lock },

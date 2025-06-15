@@ -1,6 +1,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Shield, CheckCircle, Star, Award } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface TrustIndicatorsProps {
   verificationLevel: "none" | "basic" | "verified" | "premium";
@@ -15,27 +16,29 @@ export const TrustIndicators = ({
   reviewCount = 156,
   className = "" 
 }: TrustIndicatorsProps) => {
+  const { t } = useLanguage();
+
   const getVerificationBadge = () => {
     switch (verificationLevel) {
       case "verified":
         return (
           <Badge className="bg-green-100 text-green-800 border-green-300">
             <CheckCircle className="h-3 w-3 mr-1" />
-            Verified Business
+            {t.verified} Business
           </Badge>
         );
       case "premium":
         return (
           <Badge className="bg-blue-100 text-blue-800 border-blue-300">
             <Award className="h-3 w-3 mr-1" />
-            Premium Verified
+            Premium {t.verified}
           </Badge>
         );
       case "basic":
         return (
           <Badge variant="secondary">
             <Shield className="h-3 w-3 mr-1" />
-            Basic Verified
+            Basic {t.verified}
           </Badge>
         );
       default:

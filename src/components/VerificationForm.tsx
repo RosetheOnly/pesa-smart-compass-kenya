@@ -85,10 +85,10 @@ export const VerificationForm = ({
           }
         </div>
         <CardTitle className="text-2xl font-bold text-gray-900">
-          Verify Your {verificationType === "email" ? "Email" : "Phone"}
+          {t.verify} Your {verificationType === "email" ? t.email : t.phone}
         </CardTitle>
         <p className="text-gray-600 mt-2">
-          We've sent a 6-digit code to{" "}
+          {t.enterCode}{" "}
           <span className="font-semibold">
             {verificationType === "email" ? email : phone}
           </span>
@@ -99,7 +99,7 @@ export const VerificationForm = ({
         <div className="space-y-6">
           <div>
             <Label htmlFor="otp" className="text-center block mb-4">
-              Enter Verification Code
+              {t.verificationCode}
             </Label>
             <div className="flex justify-center">
               <InputOTP
@@ -131,7 +131,7 @@ export const VerificationForm = ({
             disabled={otp.length !== 6 || isVerifying}
             className="w-full"
           >
-            {isVerifying ? "Verifying..." : "Verify Code"}
+            {isVerifying ? t.verifying : t.verify}
           </Button>
 
           <div className="text-center">
@@ -146,7 +146,7 @@ export const VerificationForm = ({
             >
               {resendCooldown > 0 
                 ? `Resend in ${resendCooldown}s` 
-                : "Resend Code"
+                : t.resendCode
               }
             </Button>
           </div>

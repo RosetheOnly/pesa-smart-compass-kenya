@@ -2,6 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Shield, CheckCircle, Lock, CreditCard, Camera, Star } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface SafetyFeaturesProps {
   variant?: "compact" | "full";
@@ -9,6 +10,8 @@ interface SafetyFeaturesProps {
 }
 
 export const SafetyFeatures = ({ variant = "full", className = "" }: SafetyFeaturesProps) => {
+  const { t } = useLanguage();
+  
   const safetyFeatures = [
     {
       icon: Shield,
@@ -18,7 +21,7 @@ export const SafetyFeatures = ({ variant = "full", className = "" }: SafetyFeatu
     },
     {
       icon: CheckCircle,
-      title: "Verified Businesses",
+      title: `${t.verified} Businesses`,
       description: "All sellers go through identity and document verification",
       stat: "98.5% Success Rate"
     },

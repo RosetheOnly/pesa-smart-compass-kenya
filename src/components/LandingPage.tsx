@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EnhancedAuthForm } from "@/components/EnhancedAuthForm";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/hooks/useLanguage";
 import { CreditCard, Building2, Users } from "lucide-react";
 import { LandingHeader } from "@/components/landing/LandingHeader";
 import { HeroSection } from "@/components/landing/HeroSection";
@@ -16,6 +17,8 @@ interface LandingPageProps {
 }
 
 export const LandingPage = ({ userType, setUserType, onAuthenticated }: LandingPageProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-white">
       <LandingHeader />
@@ -41,12 +44,12 @@ export const LandingPage = ({ userType, setUserType, onAuthenticated }: LandingP
                   }
                 </div>
                 <CardTitle className="text-2xl font-bold text-gray-900">
-                  {userType === "business" ? "Business Account" : "Customer Account"}
+                  {userType === "business" ? t.businessAccount : t.customerAccount}
                 </CardTitle>
                 <p className="text-gray-600 mt-2">
                   {userType === "business" 
-                    ? "Manage your products and grow your business" 
-                    : "Save smart and buy on flexible installments"
+                    ? t.manageProducts
+                    : t.saveSmart
                   }
                 </p>
               </CardHeader>
@@ -60,7 +63,7 @@ export const LandingPage = ({ userType, setUserType, onAuthenticated }: LandingP
                   onClick={() => setUserType(null)}
                   className="w-full mt-6 text-gray-600 hover:text-gray-800"
                 >
-                  ← Back to options
+                  {t.backToOptions}
                 </Button>
               </CardContent>
             </Card>
