@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,7 +7,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Mail, Phone, CheckCircle, Clock } from "lucide-react";
+import { Mail, Phone, CheckCircle, Clock, AlertCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 interface VerificationFormProps {
@@ -30,6 +29,7 @@ export const VerificationForm = ({
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [lastSentMethod, setLastSentMethod] = useState<string>("");
   const { t } = useLanguage();
 
   const startCooldown = () => {
@@ -63,7 +63,25 @@ export const VerificationForm = ({
       }
 
       console.log("Verification code sent successfully");
-      toast.success(`Verification code sent to ${verificationType === "email" ? email : phone}`);
+      const target = verificationType === "email" ? email : phone;
+      setLastSentMethod(verificationType);
+      
+      // Show appropriate message based on whether external services are configured
+      toast.success(
+        `Verification code sent to ${target}`,
+        {
+          description: verificationType === "email" 
+            ? "Check your email inbox (including spam folder)" 
+            : "Check your SMS messages"
+        }
+      );
+      
+      // Also show console message for demo purposes
+      toast.info(
+        "Demo Mode: Check the browser console for the verification code",
+        { duration: 8000 }
+      );
+      
       startCooldown();
     } catch (error) {
       console.error("Error:", error);
@@ -143,6 +161,21 @@ export const VerificationForm = ({
       
       <CardContent className="px-8 pb-8">
         <div className="space-y-6">
+          {lastSentMethod && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-center">
+              <div className="flex items-center justify-center mb-1">
+                <CheckCircle className="h-4 w-4 text-blue-600 mr-2" />
+                <span className="text-sm text-blue-800 font-medium">Code Sent!</span>
+              </div>
+              <p className="text-xs text-blue-600">
+                {verificationType === "email" 
+                  ? "Check your email (and spam folder) or browser console" 
+                  : "Check your SMS messages or browser console"
+                }
+              </p>
+            </div>
+          )}
+
           <div>
             <Label htmlFor="otp" className="text-center block mb-4">
               {t.verificationCode}
@@ -196,6 +229,16 @@ export const VerificationForm = ({
                   : t.resendCode
               }
             </Button>
+          </div>
+
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+            <div className="flex items-start">
+              <AlertCircle className="h-4 w-4 text-yellow-600 mr-2 mt-0.5 flex-shrink-0" />
+              <div className="text-xs text-yellow-800">
+                <p className="font-medium mb-1">Demo Mode Active</p>
+                <p>For testing, verification codes are shown in the browser console (F12 → Console tab)</p>
+              </div>
+            </div>
           </div>
 
           <Button
