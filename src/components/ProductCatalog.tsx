@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,8 @@ interface Product {
   imageUrl?: string;
 }
 
+import { PaymentOptions } from "@/components/PaymentOptions";
+
 export const ProductCatalog = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,6 +26,8 @@ export const ProductCatalog = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [installmentPeriod, setInstallmentPeriod] = useState("12");
   const [usePointsDiscount, setUsePointsDiscount] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState(0);
   
   // Mock user points - in real app this would come from user state
   const userPoints = 1250;
@@ -70,10 +73,28 @@ export const ProductCatalog = () => {
     const totalCost = calculateTotalCost(product);
     const monthlyAmount = calculateMonthlyPayment(totalCost, months);
     
-    toast.success(
-      `Installment plan created! Pay KSH ${monthlyAmount.toLocaleString()} monthly for ${months} months. ${discount > 0 ? `Discount of KSH ${discount} applied!` : ''}`
-    );
+    setPaymentAmount(monthlyAmount);
+    setShowPayment(true);
+  };
+
+  const handlePayNow = (product: Product) => {
+    const transactionFee = calculateTransactionFee(product.price);
+    const discount = usePointsDiscount ? availableDiscount : 0;
+    const totalCost = product.price + transactionFee - discount;
+    
+    setPaymentAmount(totalCost);
+    setShowPayment(true);
+    setSelectedProduct(product);
+  };
+
+  const handlePaymentSuccess = () => {
+    setShowPayment(false);
     setSelectedProduct(null);
+    toast.success("Purchase completed successfully!");
+  };
+
+  const handlePaymentCancel = () => {
+    setShowPayment(false);
   };
 
   return (
@@ -156,7 +177,12 @@ export const ProductCatalog = () => {
                       </div>
                       
                       <div className="flex space-x-2">
-                        <Button size="sm" variant="outline" className="flex-1">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="flex-1"
+                          onClick={() => handlePayNow(product)}
+                        >
                           {t.payNow}
                         </Button>
                         <Button 
@@ -252,6 +278,14 @@ export const ProductCatalog = () => {
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {showPayment && (
+        <PaymentOptions
+          amount={paymentAmount}
+          onPaymentSuccess={handlePaymentSuccess}
+          onCancel={handlePaymentCancel}
+        />
       )}
     </div>
   );

@@ -1,9 +1,11 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CreditCard, Calendar, DollarSign } from "lucide-react";
+import { PaymentOptions } from "@/components/PaymentOptions";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface Installment {
   id: string;
@@ -17,6 +19,10 @@ interface Installment {
 
 export const InstallmentTracker = () => {
   const { t } = useLanguage();
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState(0);
+  const [selectedInstallmentId, setSelectedInstallmentId] = useState<string>("");
+  
   const installments: Installment[] = [
     {
       id: "1",
@@ -37,6 +43,23 @@ export const InstallmentTracker = () => {
       nextPaymentDate: "2024-07-10"
     }
   ];
+
+  const handlePayNow = (installment: Installment) => {
+    setPaymentAmount(installment.monthlyPayment);
+    setSelectedInstallmentId(installment.id);
+    setShowPayment(true);
+  };
+
+  const handlePaymentSuccess = () => {
+    setShowPayment(false);
+    setSelectedInstallmentId("");
+    toast.success("Monthly payment completed successfully!");
+  };
+
+  const handlePaymentCancel = () => {
+    setShowPayment(false);
+    setSelectedInstallmentId("");
+  };
 
   return (
     <div className="space-y-4">
@@ -85,13 +108,26 @@ export const InstallmentTracker = () => {
                     <p className="text-sm text-muted-foreground">{t.monthlyPayment}</p>
                     <p className="font-bold">KSH {installment.monthlyPayment.toLocaleString()}</p>
                   </div>
-                  <Button size="sm">{t.payNow}</Button>
+                  <Button 
+                    size="sm" 
+                    onClick={() => handlePayNow(installment)}
+                  >
+                    {t.payNow}
+                  </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
         );
       })}
+
+      {showPayment && (
+        <PaymentOptions
+          amount={paymentAmount}
+          onPaymentSuccess={handlePaymentSuccess}
+          onCancel={handlePaymentCancel}
+        />
+      )}
     </div>
   );
 };
