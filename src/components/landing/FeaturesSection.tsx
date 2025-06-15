@@ -1,5 +1,5 @@
 
-import { CreditCard, Piggy Bank, Shield, MessageSquare } from "lucide-react";
+import { CreditCard, PiggyBank, Shield, MessageSquare } from "lucide-react";
 
 export const FeaturesSection = () => {
   return (
@@ -13,7 +13,7 @@ export const FeaturesSection = () => {
         </div>
         <div className="text-center">
           <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Piggy Bank className="h-8 w-8 text-green-600" />
+            <PiggyBank className="h-8 w-8 text-green-600" />
           </div>
           <h3 className="font-semibold text-gray-900 mb-2 text-sm">Build Savings</h3>
         </div>
