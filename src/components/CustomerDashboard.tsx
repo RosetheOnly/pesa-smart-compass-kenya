@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,6 +11,7 @@ import { ReferralProgram } from "@/components/ReferralProgram";
 import { BusinessSuggestions } from "@/components/BusinessSuggestions";
 import { SafetyFeatures } from "@/components/SafetyFeatures";
 import { SecurityDashboard } from "@/components/SecurityDashboard";
+import { EncouragementCard } from "@/components/EncouragementCard";
 import { useLanguage } from "@/hooks/useLanguage";
 import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift, Store, Shield } from "lucide-react";
 
@@ -24,7 +26,10 @@ export const CustomerDashboard = () => {
       {/* Safety Features - Prominent at the top */}
       <SafetyFeatures variant="compact" />
 
-      {/* Existing dashboard stats */}
+      {/* Daily Encouragement */}
+      <EncouragementCard />
+
+      {/* Dashboard stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
