@@ -47,6 +47,7 @@ export const ProductCatalog = () => {
     { value: "furniture", label: t.furniture },
     { value: "clothing", label: t.clothing },
     { value: "land", label: t.land },
+    { value: "vacation", label: "Vacation/Travel" },
     { value: "other", label: t.other },
   ];
 

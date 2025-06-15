@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -125,6 +124,7 @@ export const ProductManagement = () => {
                 <option value="furniture">{t.furniture}</option>
                 <option value="clothing">{t.clothing}</option>
                 <option value="land">{t.land}</option>
+                <option value="vacation">Vacation/Travel</option>
                 <option value="other">{t.other}</option>
               </select>
             </div>
