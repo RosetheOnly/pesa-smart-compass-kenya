@@ -8,15 +8,14 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ setUserType }: HeroSectionProps) => {
   return (
-    <div className="text-center py-20">
+    <div className="text-center py-20 bg-gradient-to-b from-purple-50 to-white">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-          Smart Payment Solutions
-          <span className="block text-blue-600">for Modern Kenya</span>
+          Smart Installment Payments for Kenya
         </h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-          Transform how you buy and sell with flexible installment payments. 
-          Build savings while accessing what you need today.
+        <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+          Pay for goods and services in installments while building your savings. Perfect for
+          businesses and customers.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
