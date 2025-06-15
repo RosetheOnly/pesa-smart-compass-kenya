@@ -11,6 +11,9 @@ import { BusinessVerification } from "@/components/BusinessVerification";
 import { EscrowSystem } from "@/components/EscrowSystem";
 import { PerformanceMonitoring } from "@/components/PerformanceMonitoring";
 import { FinancialSecurity } from "@/components/FinancialSecurity";
+import { ReviewSystem } from "@/components/ReviewSystem";
+import { DeliveryTracking } from "@/components/DeliveryTracking";
+import { InsuranceGuarantees } from "@/components/InsuranceGuarantees";
 import { useLanguage } from "@/hooks/useLanguage";
 import { ShoppingBag, Users, BarChart3, Settings, Shield, CreditCard, TrendingUp, DollarSign } from "lucide-react";
 
@@ -63,6 +66,9 @@ export const BusinessDashboard = () => {
           <TabsTrigger value="payments">Payments</TabsTrigger>
           <TabsTrigger value="verification">Verification</TabsTrigger>
           <TabsTrigger value="escrow">Escrow</TabsTrigger>
+          <TabsTrigger value="reviews">Reviews</TabsTrigger>
+          <TabsTrigger value="delivery">Delivery</TabsTrigger>
+          <TabsTrigger value="insurance">Insurance</TabsTrigger>
           <TabsTrigger value="performance">Performance</TabsTrigger>
           <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="analytics">{t.analytics}</TabsTrigger>
@@ -86,6 +92,18 @@ export const BusinessDashboard = () => {
 
         <TabsContent value="escrow">
           <EscrowSystem />
+        </TabsContent>
+
+        <TabsContent value="reviews">
+          <ReviewSystem />
+        </TabsContent>
+
+        <TabsContent value="delivery">
+          <DeliveryTracking />
+        </TabsContent>
+
+        <TabsContent value="insurance">
+          <InsuranceGuarantees />
         </TabsContent>
 
         <TabsContent value="performance">
