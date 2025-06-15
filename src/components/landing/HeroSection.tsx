@@ -11,7 +11,7 @@ export const HeroSection = ({ setUserType }: HeroSectionProps) => {
     <div className="text-center py-20 bg-gradient-to-b from-purple-50 to-white">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-          Smart Installment Payments for Kenya
+          Smart Installment Payments for all Products and Services
         </h1>
         <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
           Pay for goods and services in installments while building your savings. Perfect for
