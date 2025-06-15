@@ -58,7 +58,6 @@ const translations = {
     congratulations: "Congratulations on your savings progress!",
     keepGoing: "Keep going! You're doing great!",
     almostThere: "Almost there! Stay focused on your goals!",
-    // New translations
     dailyEncouragement: "Daily Encouragement",
     goalProgress: "Goal Progress",
     monthlyTarget: "Monthly Target",
@@ -135,7 +134,6 @@ const translations = {
     congratulations: "Hongera kwa maendeleo yako ya akiba!",
     keepGoing: "Endelea! Unafanya vizuri!",
     almostThere: "Karibu kumaliza! Zingatia malengo yako!",
-    // New translations
     dailyEncouragement: "Msaada wa Kila Siku",
     goalProgress: "Maendeleo ya Lengo",
     monthlyTarget: "Lengo la Kila Mwezi",
@@ -164,14 +162,14 @@ const translations = {
   }
 };
 
-export const useLanguage = create<LanguageState>((set, get) => ({
+export const useLanguage = create<LanguageState>((set) => ({
   language: 'en',
+  t: translations.en,
   setLanguage: (lang) => {
-    console.log('Setting language to:', lang);
+    console.log('Switching language to:', lang);
     set({ 
       language: lang,
       t: translations[lang]
     });
   },
-  t: translations.en,
 }));
