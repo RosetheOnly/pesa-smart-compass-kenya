@@ -1,10 +1,9 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Store, MapPin, Star, Phone, Mail, ExternalLink } from "lucide-react";
+import { Store, MapPin, Star, Phone, Mail, ExternalLink, Shield, CreditCard, CheckCircle } from "lucide-react";
 
 interface Business {
   id: string;
@@ -142,6 +141,7 @@ export const BusinessSuggestions = () => {
                           <h3 className="font-medium">{business.name}</h3>
                           {business.verified && (
                             <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
+                              <Shield className="h-3 w-3 mr-1" />
                               Verified
                             </Badge>
                           )}
@@ -156,6 +156,22 @@ export const BusinessSuggestions = () => {
                     </div>
 
                     <p className="text-sm text-muted-foreground">{business.description}</p>
+
+                    {/* Trust indicators */}
+                    <div className="flex flex-wrap gap-1">
+                      <Badge variant="outline" className="text-xs">
+                        <Shield className="h-3 w-3 mr-1" />
+                        Escrow Protected
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        <CreditCard className="h-3 w-3 mr-1" />
+                        Insured
+                      </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        <CheckCircle className="h-3 w-3 mr-1" />
+                        98% Delivery Rate
+                      </Badge>
+                    </div>
 
                     <div className="flex items-center text-sm text-muted-foreground">
                       <MapPin className="h-4 w-4 mr-1" />
@@ -204,17 +220,18 @@ export const BusinessSuggestions = () => {
         </CardContent>
       </Card>
 
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-green-50 border-green-200">
         <CardContent className="p-4">
           <div className="flex items-start space-x-3">
-            <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+            <Shield className="w-6 h-6 text-green-600 mt-1" />
             <div>
-              <h4 className="font-medium text-blue-800">Why shop with suggested businesses?</h4>
-              <ul className="text-sm text-blue-700 mt-2 space-y-1">
-                <li>• Verified businesses have been reviewed for quality and reliability</li>
-                <li>• Access to installment payment plans for all products</li>
-                <li>• Earn InstaPay points on every purchase</li>
-                <li>• Customer support and protection for all transactions</li>
+              <h4 className="font-medium text-green-800">Your Purchase is Protected</h4>
+              <ul className="text-sm text-green-700 mt-2 space-y-1">
+                <li>• All payments held securely in escrow until delivery</li>
+                <li>• Verified businesses with security deposits</li>
+                <li>• 24/7 customer support and dispute resolution</li>
+                <li>• Full refund guarantee for non-delivery</li>
+                <li>• Performance monitoring and quality assurance</li>
               </ul>
             </div>
           </div>

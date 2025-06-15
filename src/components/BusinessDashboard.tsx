@@ -7,8 +7,12 @@ import { ProductManagement } from "@/components/ProductManagement";
 import { CustomerManagement } from "@/components/CustomerManagement";
 import { BusinessIdentifier } from "@/components/BusinessIdentifier";
 import { PaymentConfiguration } from "@/components/PaymentConfiguration";
+import { BusinessVerification } from "@/components/BusinessVerification";
+import { EscrowSystem } from "@/components/EscrowSystem";
+import { PerformanceMonitoring } from "@/components/PerformanceMonitoring";
+import { FinancialSecurity } from "@/components/FinancialSecurity";
 import { useLanguage } from "@/hooks/useLanguage";
-import { ShoppingBag, Users, BarChart3, Settings } from "lucide-react";
+import { ShoppingBag, Users, BarChart3, Settings, Shield, CreditCard, TrendingUp, DollarSign } from "lucide-react";
 
 export const BusinessDashboard = () => {
   const { t } = useLanguage();
@@ -57,6 +61,10 @@ export const BusinessDashboard = () => {
           <TabsTrigger value="products">{t.products}</TabsTrigger>
           <TabsTrigger value="customers">{t.customers}</TabsTrigger>
           <TabsTrigger value="payments">Payments</TabsTrigger>
+          <TabsTrigger value="verification">Verification</TabsTrigger>
+          <TabsTrigger value="escrow">Escrow</TabsTrigger>
+          <TabsTrigger value="performance">Performance</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
           <TabsTrigger value="analytics">{t.analytics}</TabsTrigger>
         </TabsList>
 
@@ -70,6 +78,22 @@ export const BusinessDashboard = () => {
 
         <TabsContent value="payments">
           <PaymentConfiguration />
+        </TabsContent>
+
+        <TabsContent value="verification">
+          <BusinessVerification />
+        </TabsContent>
+
+        <TabsContent value="escrow">
+          <EscrowSystem />
+        </TabsContent>
+
+        <TabsContent value="performance">
+          <PerformanceMonitoring />
+        </TabsContent>
+
+        <TabsContent value="security">
+          <FinancialSecurity />
         </TabsContent>
 
         <TabsContent value="analytics">
