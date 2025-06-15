@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/hooks/useLanguage";
-import { ShoppingCart, Search, Filter, Clock } from "lucide-react";
+import { ShoppingCart, Search, Filter, Clock, Info } from "lucide-react";
 import { toast } from "sonner";
+import { calculateTransactionFee, calculatePointsDiscount } from "@/utils/feeCalculation";
 
 interface Product {
   id: string;
@@ -23,6 +24,11 @@ export const ProductCatalog = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [installmentPeriod, setInstallmentPeriod] = useState("12");
+  const [usePointsDiscount, setUsePointsDiscount] = useState(false);
+  
+  // Mock user points - in real app this would come from user state
+  const userPoints = 1250;
+  const availableDiscount = calculatePointsDiscount(userPoints);
   
   const products: Product[] = [
     { id: "1", name: "Samsung Galaxy S24", price: 85000, category: "electronics", maxInstallmentPeriod: 24 },
@@ -51,18 +57,46 @@ export const ProductCatalog = () => {
     return Math.ceil(price / months);
   };
 
+  const calculateTotalCost = (product: Product) => {
+    const transactionFee = calculateTransactionFee(product.price);
+    const discount = usePointsDiscount ? availableDiscount : 0;
+    return product.price + transactionFee - discount;
+  };
+
   const handleBuyInstallment = (product: Product) => {
     const months = parseInt(installmentPeriod);
-    const monthlyAmount = calculateMonthlyPayment(product.price, months);
+    const transactionFee = calculateTransactionFee(product.price);
+    const discount = usePointsDiscount ? availableDiscount : 0;
+    const totalCost = calculateTotalCost(product);
+    const monthlyAmount = calculateMonthlyPayment(totalCost, months);
     
     toast.success(
-      `Installment plan created! Pay KSH ${monthlyAmount.toLocaleString()} monthly for ${months} months.`
+      `Installment plan created! Pay KSH ${monthlyAmount.toLocaleString()} monthly for ${months} months. ${discount > 0 ? `Discount of KSH ${discount} applied!` : ''}`
     );
     setSelectedProduct(null);
   };
 
   return (
     <div className="space-y-6">
+      {/* Points Banner */}
+      {userPoints > 0 && (
+        <Card className="bg-gradient-to-r from-blue-50 to-green-50 border-blue-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-medium text-blue-800">InstaPay Points Available</h3>
+                <p className="text-sm text-blue-600">
+                  You have {userPoints} points worth KSH {availableDiscount} discount
+                </p>
+              </div>
+              <div className="text-2xl font-bold text-green-600">
+                KSH {availableDiscount}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
@@ -98,38 +132,46 @@ export const ProductCatalog = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredProducts.map((product) => (
-              <Card key={product.id} className="cursor-pointer hover:shadow-lg transition-shadow">
-                <CardContent className="p-4">
-                  <div className="space-y-3">
-                    <div>
-                      <h3 className="font-medium">{product.name}</h3>
-                      <p className="text-2xl font-bold text-green-600">
-                        KSH {product.price.toLocaleString()}
-                      </p>
+            {filteredProducts.map((product) => {
+              const transactionFee = calculateTransactionFee(product.price);
+              
+              return (
+                <Card key={product.id} className="cursor-pointer hover:shadow-lg transition-shadow">
+                  <CardContent className="p-4">
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="font-medium">{product.name}</h3>
+                        <p className="text-2xl font-bold text-green-600">
+                          KSH {product.price.toLocaleString()}
+                        </p>
+                        <p className="text-xs text-muted-foreground flex items-center">
+                          <Info className="h-3 w-3 mr-1" />
+                          + KSH {transactionFee} transaction fee
+                        </p>
+                      </div>
+                      
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Clock className="h-4 w-4 mr-1" />
+                        Up to {product.maxInstallmentPeriod} {t.months}
+                      </div>
+                      
+                      <div className="flex space-x-2">
+                        <Button size="sm" variant="outline" className="flex-1">
+                          {t.payNow}
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => setSelectedProduct(product)}
+                        >
+                          {t.buyOnInstallment}
+                        </Button>
+                      </div>
                     </div>
-                    
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <Clock className="h-4 w-4 mr-1" />
-                      Up to {product.maxInstallmentPeriod} {t.months}
-                    </div>
-                    
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" className="flex-1">
-                        {t.payNow}
-                      </Button>
-                      <Button 
-                        size="sm" 
-                        className="flex-1"
-                        onClick={() => setSelectedProduct(product)}
-                      >
-                        {t.buyOnInstallment}
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
@@ -156,16 +198,46 @@ export const ProductCatalog = () => {
                   ))}
                 </select>
               </div>
+
+              {availableDiscount > 0 && (
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    id="useDiscount"
+                    checked={usePointsDiscount}
+                    onChange={(e) => setUsePointsDiscount(e.target.checked)}
+                    className="rounded"
+                  />
+                  <Label htmlFor="useDiscount">
+                    Use KSH {availableDiscount} InstaPay points discount
+                  </Label>
+                </div>
+              )}
               
-              <div className="p-4 bg-blue-50 rounded-lg">
+              <div className="p-4 bg-blue-50 rounded-lg space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Product Price:</span>
+                  <span>KSH {selectedProduct.price.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Transaction Fee:</span>
+                  <span>KSH {calculateTransactionFee(selectedProduct.price)}</span>
+                </div>
+                {usePointsDiscount && availableDiscount > 0 && (
+                  <div className="flex justify-between text-sm text-green-600">
+                    <span>InstaPay Discount:</span>
+                    <span>- KSH {availableDiscount}</span>
+                  </div>
+                )}
+                <hr className="my-2" />
                 <div className="flex justify-between items-center">
                   <span className="font-medium">{t.monthlyPayment}:</span>
                   <span className="text-xl font-bold text-blue-600">
-                    KSH {calculateMonthlyPayment(selectedProduct.price, parseInt(installmentPeriod)).toLocaleString()}
+                    KSH {calculateMonthlyPayment(calculateTotalCost(selectedProduct), parseInt(installmentPeriod)).toLocaleString()}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Total: KSH {selectedProduct.price.toLocaleString()} over {installmentPeriod} months
+                <p className="text-sm text-muted-foreground">
+                  Total: KSH {calculateTotalCost(selectedProduct).toLocaleString()} over {installmentPeriod} months
                 </p>
               </div>
               

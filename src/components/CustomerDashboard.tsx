@@ -7,8 +7,9 @@ import { InstallmentTracker } from "@/components/InstallmentTracker";
 import { EmergencyFund } from "@/components/EmergencyFund";
 import { ProductCatalog } from "@/components/ProductCatalog";
 import { ReviewInterface } from "@/components/ReviewInterface";
+import { ReferralProgram } from "@/components/ReferralProgram";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star } from "lucide-react";
+import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift } from "lucide-react";
 
 export const CustomerDashboard = () => {
   const { t } = useLanguage();
@@ -59,6 +60,7 @@ export const CustomerDashboard = () => {
           <TabsTrigger value="installments">{t.installments}</TabsTrigger>
           <TabsTrigger value="emergency">{t.emergency}</TabsTrigger>
           <TabsTrigger value="shop">Shop</TabsTrigger>
+          <TabsTrigger value="referrals">Referrals</TabsTrigger>
           <TabsTrigger value="reviews">Reviews</TabsTrigger>
         </TabsList>
 
@@ -76,6 +78,10 @@ export const CustomerDashboard = () => {
 
         <TabsContent value="shop">
           <ProductCatalog />
+        </TabsContent>
+
+        <TabsContent value="referrals">
+          <ReferralProgram />
         </TabsContent>
 
         <TabsContent value="reviews">
