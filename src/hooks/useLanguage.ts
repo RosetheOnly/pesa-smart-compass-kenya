@@ -105,6 +105,11 @@ const translations = {
     emergencyAccess: "Emergency fund access (2%)",
     paymentReminders: "Payment reminders via SMS",
     registerCustomer: "Register as Customer",
+    // Features section translations
+    flexibleInstallmentsTitle: "Flexible Installments",
+    buildSavingsTitle: "Build Savings",
+    emergencyAccessTitle: "Emergency Access",
+    smsRemindersTitle: "SMS Reminders",
   },
   sw: {
     appName: "Pesa Smart Plan Kenya",
@@ -201,6 +206,11 @@ const translations = {
     emergencyAccess: "Upatikanaji wa fedha za dharura (2%)",
     paymentReminders: "Mikumbusko ya malipo kupitia SMS",
     registerCustomer: "Jisajili kama Mteja",
+    // Features section translations
+    flexibleInstallmentsTitle: "Malipo ya Awamu Yanayofaa",
+    buildSavingsTitle: "Jenga Akiba",
+    emergencyAccessTitle: "Upatikanaji wa Dharura",
+    smsRemindersTitle: "Mikumbusko ya SMS",
   }
 };
 
