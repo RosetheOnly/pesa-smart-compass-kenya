@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -58,22 +58,19 @@ export const VerificationForm = ({
 
     setIsVerifying(true);
     
-    // Simulate OTP verification
+    // Simulate OTP verification - accept any 6-digit code for demo
     setTimeout(() => {
-      if (otp === "123456" || otp.length === 6) { // Accept any 6-digit code for demo
-        toast.success("Verification successful!");
-        onVerificationComplete();
-      } else {
-        toast.error("Invalid verification code");
-      }
+      console.log("Verifying OTP:", otp);
+      toast.success("Verification successful!");
+      onVerificationComplete();
       setIsVerifying(false);
     }, 1500);
   };
 
   // Auto-start cooldown on component mount
-  useState(() => {
+  useEffect(() => {
     startCooldown();
-  });
+  }, []);
 
   return (
     <Card className="shadow-2xl border-0 rounded-3xl max-w-md mx-auto">
