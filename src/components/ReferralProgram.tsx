@@ -19,6 +19,7 @@ interface ReferralData {
     name: string;
     date: string;
     pointsEarned: number;
+    purchaseAmount: number;
     status: 'pending' | 'completed';
   }>;
 }
@@ -26,14 +27,14 @@ interface ReferralData {
 export const ReferralProgram = () => {
   const { t } = useLanguage();
   const [referralData] = useState<ReferralData>({
-    totalPoints: 1250,
-    availableDiscount: calculatePointsDiscount(1250),
-    referralsCount: 8,
+    totalPoints: 850,
+    availableDiscount: calculatePointsDiscount(850),
+    referralsCount: 5,
     referralCode: "JOHN2024",
     recentReferrals: [
-      { id: "1", name: "Mary Wanjiru", date: "2024-12-10", pointsEarned: 200, status: "completed" },
-      { id: "2", name: "Peter Kiprotich", date: "2024-12-08", pointsEarned: 150, status: "completed" },
-      { id: "3", name: "Grace Achieng", date: "2024-12-05", pointsEarned: 200, status: "pending" },
+      { id: "1", name: "Mary Wanjiru", date: "2024-12-10", pointsEarned: 250, purchaseAmount: 25000, status: "completed" },
+      { id: "2", name: "Peter Kiprotich", date: "2024-12-08", pointsEarned: 150, purchaseAmount: 15000, status: "completed" },
+      { id: "3", name: "Grace Achieng", date: "2024-12-05", pointsEarned: 120, purchaseAmount: 12000, status: "pending" },
     ]
   });
 
@@ -76,12 +77,12 @@ export const ReferralProgram = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Referrals</CardTitle>
+            <CardTitle className="text-sm font-medium">Paid Referrals</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{referralData.referralsCount}</div>
-            <p className="text-xs text-muted-foreground">Successful referrals</p>
+            <p className="text-xs text-muted-foreground">Customers who made purchases</p>
           </CardContent>
         </Card>
       </div>
@@ -94,7 +95,7 @@ export const ReferralProgram = () => {
             Share & Earn
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Earn 200 points for each friend who signs up, plus 1 point per KSH 100 they spend!
+            Earn 1 point per KSH 100 spent by your referred customers!
           </p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -119,7 +120,7 @@ export const ReferralProgram = () => {
             <h4 className="font-medium text-blue-800 mb-2">How it works:</h4>
             <ul className="text-sm text-blue-700 space-y-1">
               <li>• Share your referral code with friends</li>
-              <li>• Earn 200 points when they sign up</li>
+              <li>• Earn points only when they make purchases</li>
               <li>• Earn 1 point per KSH 100 they spend</li>
               <li>• Use 100 points = KSH 1 discount (max KSH 5)</li>
             </ul>
@@ -130,7 +131,7 @@ export const ReferralProgram = () => {
       {/* Recent Referrals */}
       <Card>
         <CardHeader>
-          <CardTitle>Recent Referrals</CardTitle>
+          <CardTitle>Recent Paid Referrals</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
@@ -139,6 +140,7 @@ export const ReferralProgram = () => {
                 <div>
                   <h4 className="font-medium">{referral.name}</h4>
                   <p className="text-sm text-muted-foreground">{referral.date}</p>
+                  <p className="text-xs text-muted-foreground">Purchase: KSH {referral.purchaseAmount.toLocaleString()}</p>
                 </div>
                 <div className="text-right">
                   <div className="flex items-center space-x-2">

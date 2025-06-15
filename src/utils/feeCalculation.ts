@@ -20,14 +20,10 @@ export const calculatePointsDiscount = (instaPayPoints: number): number => {
   return Math.min(discountAmount, 5); // Cap at KSH 5
 };
 
-// Calculate points earned from referrals
-export const calculatePointsFromReferral = (referralType: 'signup' | 'purchase', purchaseAmount?: number): number => {
-  if (referralType === 'signup') {
-    return 200; // 200 points for each successful referral signup
-  }
-  
-  if (referralType === 'purchase' && purchaseAmount) {
-    // 1 point per KSH 100 spent by referred user
+// Calculate points earned from referrals (paid referrals only)
+export const calculatePointsFromReferral = (referralType: 'purchase', purchaseAmount: number): number => {
+  if (referralType === 'purchase' && purchaseAmount > 0) {
+    // 1 point per KSH 100 spent by referred user (paid referrals only)
     return Math.floor(purchaseAmount / 100);
   }
   
