@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,7 +9,7 @@ import { PaymentConfiguration } from "@/components/PaymentConfiguration";
 import { BusinessVerification } from "@/components/BusinessVerification";
 import { EscrowSystem } from "@/components/EscrowSystem";
 import { PerformanceMonitoring } from "@/components/PerformanceMonitoring";
-import { FinancialSecurity } from "@/components/FinancialSecurity";
+import { SecurityDashboard } from "@/components/SecurityDashboard";
 import { ReviewSystem } from "@/components/ReviewSystem";
 import { DeliveryTracking } from "@/components/DeliveryTracking";
 import { InsuranceGuarantees } from "@/components/InsuranceGuarantees";
@@ -113,7 +112,7 @@ export const BusinessDashboard = () => {
         </TabsContent>
 
         <TabsContent value="security">
-          <FinancialSecurity />
+          <SecurityDashboard />
         </TabsContent>
 
         <TabsContent value="analytics">
