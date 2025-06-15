@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,10 +16,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift, Store, Shield } from "lucide-react";
 
 export const CustomerDashboard = () => {
-  const { t } = useLanguage();
+  const { t, version } = useLanguage(); // Add version to force re-render
   const [totalSavings] = useState(45000);
   const [emergencyAvailable] = useState(900);
   const [activeInstallments] = useState(3);
+
+  console.log('CustomerDashboard render - version:', version, 'language sample:', t.customer);
 
   return (
     <div className="space-y-6">

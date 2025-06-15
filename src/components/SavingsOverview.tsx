@@ -6,10 +6,12 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Wallet, Target, TrendingUp } from "lucide-react";
 
 export const SavingsOverview = () => {
-  const { t } = useLanguage();
+  const { t, version } = useLanguage(); // Add version to force re-render
   const totalSavings = 45000;
   const savingsGoal = 60000;
   const progress = (totalSavings / savingsGoal) * 100;
+
+  console.log('SavingsOverview render - version:', version, 'language sample:', t.customer);
 
   return (
     <Card>

@@ -5,8 +5,10 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Heart, Quote } from "lucide-react";
 
 export const EncouragementCard = () => {
-  const { t } = useLanguage();
+  const { t, version } = useLanguage(); // Add version to force re-render
   const message = useEncouragementMessages();
+
+  console.log('EncouragementCard render - version:', version, 'language sample:', t.customer);
 
   if (!message) return null;
 

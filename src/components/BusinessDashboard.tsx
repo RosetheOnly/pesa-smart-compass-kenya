@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -17,7 +18,9 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { ShoppingBag, Users, BarChart3, Settings, Shield, CreditCard, TrendingUp, DollarSign } from "lucide-react";
 
 export const BusinessDashboard = () => {
-  const { t } = useLanguage();
+  const { t, version } = useLanguage(); // Add version to force re-render
+
+  console.log('BusinessDashboard render - version:', version, 'language sample:', t.customer);
 
   return (
     <div className="space-y-6">

@@ -10,10 +10,12 @@ import { Building2, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 
 export const BusinessIdentifier = () => {
-  const { t } = useLanguage();
+  const { t, version } = useLanguage(); // Add version to force re-render
   const [businessId] = useState("BIZ-2024-" + Math.random().toString(36).substr(2, 8).toUpperCase());
   const [businessName, setBusinessName] = useState("My Business");
   const [copied, setCopied] = useState(false);
+
+  console.log('BusinessIdentifier render - version:', version, 'language sample:', t.customer);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(businessId);
