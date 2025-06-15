@@ -6,6 +6,7 @@ import { BusinessDashboard } from "@/components/BusinessDashboard";
 import { CustomerDashboard } from "@/components/CustomerDashboard";
 import { AuthForm } from "@/components/AuthForm";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { ChatbotButton } from "@/components/ChatbotButton";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CreditCard } from "lucide-react";
 import { LandingPage } from "@/components/LandingPage";
@@ -17,11 +18,14 @@ const Index = () => {
 
   if (!isAuthenticated) {
     return (
-      <LandingPage 
-        userType={userType} 
-        setUserType={setUserType} 
-        onAuthenticated={() => setIsAuthenticated(true)} 
-      />
+      <>
+        <LandingPage 
+          userType={userType} 
+          setUserType={setUserType} 
+          onAuthenticated={() => setIsAuthenticated(true)} 
+        />
+        <ChatbotButton />
+      </>
     );
   }
 
@@ -50,6 +54,8 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8">
         {userType === "business" ? <BusinessDashboard /> : <CustomerDashboard />}
       </main>
+      
+      <ChatbotButton />
     </div>
   );
 };
