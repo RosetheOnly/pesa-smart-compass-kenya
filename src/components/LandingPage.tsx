@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { EnhancedAuthForm } from "@/components/EnhancedAuthForm";
+import { AuthForm } from "@/components/AuthForm";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { useLanguage } from "@/hooks/useLanguage";
 import { CreditCard, Building2, Users } from "lucide-react";
@@ -54,7 +54,7 @@ export const LandingPage = ({ userType, setUserType, onAuthenticated }: LandingP
                 </p>
               </CardHeader>
               <CardContent className="px-10 pb-10">
-                <EnhancedAuthForm
+                <AuthForm
                   userType={userType}
                   onAuthenticated={onAuthenticated}
                 />
