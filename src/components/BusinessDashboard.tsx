@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -5,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { ProductManagement } from "@/components/ProductManagement";
 import { CustomerManagement } from "@/components/CustomerManagement";
 import { BusinessIdentifier } from "@/components/BusinessIdentifier";
+import { PaymentConfiguration } from "@/components/PaymentConfiguration";
 import { useLanguage } from "@/hooks/useLanguage";
-import { ShoppingBag, Users, BarChart3, Plus } from "lucide-react";
+import { ShoppingBag, Users, BarChart3, Settings } from "lucide-react";
 
 export const BusinessDashboard = () => {
   const { t } = useLanguage();
@@ -54,6 +56,7 @@ export const BusinessDashboard = () => {
         <TabsList>
           <TabsTrigger value="products">{t.products}</TabsTrigger>
           <TabsTrigger value="customers">{t.customers}</TabsTrigger>
+          <TabsTrigger value="payments">Payments</TabsTrigger>
           <TabsTrigger value="analytics">{t.analytics}</TabsTrigger>
         </TabsList>
 
@@ -63,6 +66,10 @@ export const BusinessDashboard = () => {
 
         <TabsContent value="customers">
           <CustomerManagement />
+        </TabsContent>
+
+        <TabsContent value="payments">
+          <PaymentConfiguration />
         </TabsContent>
 
         <TabsContent value="analytics">
