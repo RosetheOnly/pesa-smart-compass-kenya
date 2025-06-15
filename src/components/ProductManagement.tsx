@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 
 interface Product {
@@ -14,21 +14,54 @@ interface Product {
   price: number;
   category: string;
   maxInstallmentPeriod: number;
+  images: string[];
 }
 
 export const ProductManagement = () => {
   const { t } = useLanguage();
   const [products, setProducts] = useState<Product[]>([
-    { id: "1", name: "Samsung Galaxy S24", price: 85000, category: "electronics", maxInstallmentPeriod: 24 },
-    { id: "2", name: "Office Chair", price: 15000, category: "furniture", maxInstallmentPeriod: 12 },
+    { 
+      id: "1", 
+      name: "Samsung Galaxy S24", 
+      price: 85000, 
+      category: "electronics", 
+      maxInstallmentPeriod: 24,
+      images: ["https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400"]
+    },
+    { 
+      id: "2", 
+      name: "Office Chair", 
+      price: 15000, 
+      category: "furniture", 
+      maxInstallmentPeriod: 12,
+      images: []
+    },
   ]);
   const [isAdding, setIsAdding] = useState(false);
   const [newProduct, setNewProduct] = useState({
     name: "",
     price: "",
     category: "electronics",
-    maxInstallmentPeriod: "12"
+    maxInstallmentPeriod: "12",
+    images: [] as string[]
   });
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      // Simulate image upload - in real app, you'd upload to a server
+      const imageUrls = Array.from(files).map((file) => {
+        return URL.createObjectURL(file);
+      });
+      setNewProduct({ ...newProduct, images: [...newProduct.images, ...imageUrls] });
+      toast.success(`${files.length} image(s) uploaded successfully!`);
+    }
+  };
+
+  const removeImage = (index: number) => {
+    const updatedImages = newProduct.images.filter((_, i) => i !== index);
+    setNewProduct({ ...newProduct, images: updatedImages });
+  };
 
   const handleAddProduct = () => {
     if (!newProduct.name || !newProduct.price) {
@@ -41,11 +74,12 @@ export const ProductManagement = () => {
       name: newProduct.name,
       price: parseInt(newProduct.price),
       category: newProduct.category,
-      maxInstallmentPeriod: parseInt(newProduct.maxInstallmentPeriod)
+      maxInstallmentPeriod: parseInt(newProduct.maxInstallmentPeriod),
+      images: newProduct.images
     };
 
     setProducts([...products, product]);
-    setNewProduct({ name: "", price: "", category: "electronics", maxInstallmentPeriod: "12" });
+    setNewProduct({ name: "", price: "", category: "electronics", maxInstallmentPeriod: "12", images: [] });
     setIsAdding(false);
     toast.success("Product added successfully!");
   };
@@ -103,6 +137,48 @@ export const ProductManagement = () => {
                 onChange={(e) => setNewProduct({ ...newProduct, maxInstallmentPeriod: e.target.value })}
               />
             </div>
+            
+            <div>
+              <Label htmlFor="productImages">Product Images</Label>
+              <div className="mt-2">
+                <label htmlFor="imageUpload" className="cursor-pointer">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
+                    <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
+                    <p className="text-sm text-gray-600">Click to upload images</p>
+                    <p className="text-xs text-gray-400">PNG, JPG up to 10MB</p>
+                  </div>
+                </label>
+                <input
+                  id="imageUpload"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                />
+              </div>
+              
+              {newProduct.images.length > 0 && (
+                <div className="mt-3 grid grid-cols-3 gap-2">
+                  {newProduct.images.map((image, index) => (
+                    <div key={index} className="relative group">
+                      <img
+                        src={image}
+                        alt={`Product ${index + 1}`}
+                        className="w-full h-20 object-cover rounded border"
+                      />
+                      <button
+                        onClick={() => removeImage(index)}
+                        className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
             <div className="flex space-x-2">
               <Button onClick={handleAddProduct}>{t.save}</Button>
               <Button variant="outline" onClick={() => setIsAdding(false)}>{t.cancel}</Button>
@@ -112,12 +188,26 @@ export const ProductManagement = () => {
 
         <div className="space-y-4">
           {products.map((product) => (
-            <div key={product.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <div>
-                <h3 className="font-medium">{product.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  KSH {product.price.toLocaleString()} • {product.maxInstallmentPeriod} {t.months} max
-                </p>
+            <div key={product.id} className="flex items-start justify-between p-4 border rounded-lg">
+              <div className="flex space-x-4">
+                {product.images.length > 0 && (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-16 h-16 object-cover rounded border"
+                  />
+                )}
+                <div>
+                  <h3 className="font-medium">{product.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    KSH {product.price.toLocaleString()} • {product.maxInstallmentPeriod} {t.months} max
+                  </p>
+                  {product.images.length > 1 && (
+                    <p className="text-xs text-muted-foreground">
+                      +{product.images.length - 1} more image(s)
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="flex space-x-2">
                 <Button size="sm" variant="outline">
