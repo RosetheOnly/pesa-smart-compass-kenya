@@ -1,5 +1,6 @@
 
 import { create } from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
 
 interface LanguageState {
   language: 'en' | 'sw';
@@ -162,14 +163,29 @@ const translations = {
   }
 };
 
-export const useLanguage = create<LanguageState>((set) => ({
-  language: 'en',
-  t: translations.en,
-  setLanguage: (lang) => {
-    console.log('Switching language to:', lang);
-    set({ 
-      language: lang,
-      t: translations[lang]
-    });
-  },
-}));
+export const useLanguage = create<LanguageState>()(
+  subscribeWithSelector((set, get) => ({
+    language: 'en',
+    t: translations.en,
+    setLanguage: (lang) => {
+      console.log('Language change requested:', lang);
+      console.log('Current language:', get().language);
+      console.log('Will update translations to:', lang);
+      
+      set(state => {
+        const newState = {
+          language: lang,
+          t: translations[lang]
+        };
+        console.log('New state set:', newState);
+        return newState;
+      });
+      
+      // Verify the change
+      setTimeout(() => {
+        console.log('Language after update:', get().language);
+        console.log('Sample translation after update:', get().t.customer);
+      }, 100);
+    },
+  }))
+);
