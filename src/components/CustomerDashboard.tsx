@@ -8,8 +8,10 @@ import { ProductCatalog } from "@/components/ProductCatalog";
 import { ReviewInterface } from "@/components/ReviewInterface";
 import { ReferralProgram } from "@/components/ReferralProgram";
 import { BusinessSuggestions } from "@/components/BusinessSuggestions";
+import { SafetyFeatures } from "@/components/SafetyFeatures";
+import { SecurityDashboard } from "@/components/SecurityDashboard";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift, Store } from "lucide-react";
+import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift, Store, Shield } from "lucide-react";
 
 export const CustomerDashboard = () => {
   const { t } = useLanguage();
@@ -19,6 +21,10 @@ export const CustomerDashboard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Safety Features - Prominent at the top */}
+      <SafetyFeatures variant="compact" />
+
+      {/* Existing dashboard stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -59,6 +65,10 @@ export const CustomerDashboard = () => {
           <TabsTrigger value="savings">{t.savings}</TabsTrigger>
           <TabsTrigger value="installments">{t.installments}</TabsTrigger>
           <TabsTrigger value="emergency">{t.emergency}</TabsTrigger>
+          <TabsTrigger value="safety">
+            <Shield className="h-4 w-4 mr-1" />
+            Safety
+          </TabsTrigger>
           <TabsTrigger value="businesses">Businesses</TabsTrigger>
           <TabsTrigger value="shop">Shop</TabsTrigger>
           <TabsTrigger value="referrals">Referrals</TabsTrigger>
@@ -75,6 +85,13 @@ export const CustomerDashboard = () => {
 
         <TabsContent value="emergency">
           <EmergencyFund />
+        </TabsContent>
+
+        <TabsContent value="safety">
+          <div className="space-y-6">
+            <SafetyFeatures />
+            <SecurityDashboard />
+          </div>
         </TabsContent>
 
         <TabsContent value="businesses">
