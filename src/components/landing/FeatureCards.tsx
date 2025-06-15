@@ -2,12 +2,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Building2, Users } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface FeatureCardsProps {
   setUserType: (type: "customer" | "business") => void;
 }
 
 export const FeatureCards = ({ setUserType }: FeatureCardsProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="grid lg:grid-cols-2 gap-8 mb-20 px-6">
       {/* Business Card */}
@@ -16,33 +19,33 @@ export const FeatureCards = ({ setUserType }: FeatureCardsProps) => {
           <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
             <Building2 className="h-6 w-6 text-blue-600" />
           </div>
-          <CardTitle className="text-2xl text-gray-900 mb-2">For Businesses</CardTitle>
-          <p className="text-gray-600 text-base">Increase sales by offering flexible payment options to your customers</p>
+          <CardTitle className="text-2xl text-gray-900 mb-2">{t.forBusinessesTitle}</CardTitle>
+          <p className="text-gray-600 text-base">{t.forBusinessesDesc}</p>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3 text-gray-700 mb-6 text-sm">
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">•</span>
-              <span>Manage products and payment terms</span>
+              <span>{t.manageProductsFeature}</span>
             </li>
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">•</span>
-              <span>Track customer installments</span>
+              <span>{t.trackInstallments}</span>
             </li>
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">•</span>
-              <span>Analytics and reporting</span>
+              <span>{t.analyticsReporting}</span>
             </li>
             <li className="flex items-start">
               <span className="text-blue-600 mr-2">•</span>
-              <span>Automated SMS notifications</span>
+              <span>{t.smsNotifications}</span>
             </li>
           </ul>
           <Button 
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-sm rounded-lg shadow-md hover:shadow-lg transition-all"
             onClick={() => setUserType("business")}
           >
-            Register Business
+            {t.registerBusiness}
           </Button>
         </CardContent>
       </Card>
@@ -53,33 +56,33 @@ export const FeatureCards = ({ setUserType }: FeatureCardsProps) => {
           <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
             <Users className="h-6 w-6 text-green-600" />
           </div>
-          <CardTitle className="text-2xl text-gray-900 mb-2">For Customers</CardTitle>
-          <p className="text-gray-600 text-base">Buy what you need today and pay over time while saving for the future</p>
+          <CardTitle className="text-2xl text-gray-900 mb-2">{t.forCustomersTitle}</CardTitle>
+          <p className="text-gray-600 text-base">{t.forCustomersDesc}</p>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3 text-gray-700 mb-6 text-sm">
             <li className="flex items-start">
               <span className="text-green-600 mr-2">•</span>
-              <span>Flexible installment payments</span>
+              <span>{t.flexiblePayments}</span>
             </li>
             <li className="flex items-start">
               <span className="text-green-600 mr-2">•</span>
-              <span>Build savings automatically</span>
+              <span>{t.buildSavings}</span>
             </li>
             <li className="flex items-start">
               <span className="text-green-600 mr-2">•</span>
-              <span>Emergency fund access (2%)</span>
+              <span>{t.emergencyAccess}</span>
             </li>
             <li className="flex items-start">
               <span className="text-green-600 mr-2">•</span>
-              <span>Payment reminders via SMS</span>
+              <span>{t.paymentReminders}</span>
             </li>
           </ul>
           <Button 
             className="w-full bg-green-600 hover:bg-green-700 text-white py-3 text-sm rounded-lg shadow-md hover:shadow-lg transition-all"
             onClick={() => setUserType("customer")}
           >
-            Register as Customer
+            {t.registerCustomer}
           </Button>
         </CardContent>
       </Card>

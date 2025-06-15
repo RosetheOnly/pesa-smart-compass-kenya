@@ -85,6 +85,26 @@ const translations = {
     verify: "Verify",
     sendingCode: "Sending code...",
     verifying: "Verifying...",
+    // Hero section translations
+    heroTitle: "Smart Installment Payments for all Products and Services",
+    heroDescription: "Pay for goods and services in installments while building your savings. Perfect for businesses and customers.",
+    forBusiness: "For Business",
+    forCustomers: "For Customers",
+    // Feature cards translations
+    forBusinessesTitle: "For Businesses",
+    forBusinessesDesc: "Increase sales by offering flexible payment options to your customers",
+    manageProductsFeature: "Manage products and payment terms",
+    trackInstallments: "Track customer installments",
+    analyticsReporting: "Analytics and reporting",
+    smsNotifications: "Automated SMS notifications",
+    registerBusiness: "Register Business",
+    forCustomersTitle: "For Customers",
+    forCustomersDesc: "Buy what you need today and pay over time while saving for the future",
+    flexiblePayments: "Flexible installment payments",
+    buildSavings: "Build savings automatically",
+    emergencyAccess: "Emergency fund access (2%)",
+    paymentReminders: "Payment reminders via SMS",
+    registerCustomer: "Register as Customer",
   },
   sw: {
     appName: "Pesa Smart Plan Kenya",
@@ -161,6 +181,26 @@ const translations = {
     verify: "Thibitisha",
     sendingCode: "Inatuma namba...",
     verifying: "Inathibitisha...",
+    // Hero section translations
+    heroTitle: "Malipo ya Kisasa ya Awamu kwa Bidhaa na Huduma Zote",
+    heroDescription: "Lipa bidhaa na huduma kwa awamu huku ukijenga akiba zako. Inafaa kwa biashara na wateja.",
+    forBusiness: "Kwa Biashara",
+    forCustomers: "Kwa Wateja",
+    // Feature cards translations
+    forBusinessesTitle: "Kwa Biashara",
+    forBusinessesDesc: "Ongeza mauzo kwa kutoa chaguzi za malipo za kufaa kwa wateja wako",
+    manageProductsFeature: "Simamia bidhaa na masharti ya malipo",
+    trackInstallments: "Fuatilia malipo ya awamu ya wateja",
+    analyticsReporting: "Uchambuzi na ripoti",
+    smsNotifications: "Arifa za SMS za kiotomatiki",
+    registerBusiness: "Sajili Biashara",
+    forCustomersTitle: "Kwa Wateja",
+    forCustomersDesc: "Nunua unachohitaji leo na ulipe kwa muda huku ukiokoa kwa mustakabali",
+    flexiblePayments: "Malipo ya awamu yanayofaa",
+    buildSavings: "Jenga akiba kiotomatiki",
+    emergencyAccess: "Upatikanaji wa fedha za dharura (2%)",
+    paymentReminders: "Mikumbusko ya malipo kupitia SMS",
+    registerCustomer: "Jisajili kama Mteja",
   }
 };
 

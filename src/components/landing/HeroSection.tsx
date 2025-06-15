@@ -1,21 +1,23 @@
 
 import { Button } from "@/components/ui/button";
 import { Building2, Users } from "lucide-react";
+import { useLanguage } from "@/hooks/useLanguage";
 
 interface HeroSectionProps {
   setUserType: (type: "customer" | "business") => void;
 }
 
 export const HeroSection = ({ setUserType }: HeroSectionProps) => {
+  const { t } = useLanguage();
+
   return (
     <div className="text-center py-20 bg-gradient-to-b from-purple-50 to-white">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-          Smart Installment Payments for all Products and Services
+          {t.heroTitle}
         </h1>
         <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-          Pay for goods and services in installments while building your savings. Perfect for
-          businesses and customers.
+          {t.heroDescription}
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
@@ -25,7 +27,7 @@ export const HeroSection = ({ setUserType }: HeroSectionProps) => {
             onClick={() => setUserType("business")}
           >
             <Building2 className="h-6 w-6 mr-3" />
-            For Business
+            {t.forBusiness}
           </Button>
           <Button 
             size="lg" 
@@ -34,7 +36,7 @@ export const HeroSection = ({ setUserType }: HeroSectionProps) => {
             onClick={() => setUserType("customer")}
           >
             <Users className="h-6 w-6 mr-3" />
-            For Customers
+            {t.forCustomers}
           </Button>
         </div>
       </div>
