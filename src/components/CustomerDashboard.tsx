@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,8 +7,9 @@ import { EmergencyFund } from "@/components/EmergencyFund";
 import { ProductCatalog } from "@/components/ProductCatalog";
 import { ReviewInterface } from "@/components/ReviewInterface";
 import { ReferralProgram } from "@/components/ReferralProgram";
+import { BusinessSuggestions } from "@/components/BusinessSuggestions";
 import { useLanguage } from "@/hooks/useLanguage";
-import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift } from "lucide-react";
+import { Wallet, CreditCard, AlertCircle, ShoppingCart, Star, Gift, Store } from "lucide-react";
 
 export const CustomerDashboard = () => {
   const { t } = useLanguage();
@@ -59,6 +59,7 @@ export const CustomerDashboard = () => {
           <TabsTrigger value="savings">{t.savings}</TabsTrigger>
           <TabsTrigger value="installments">{t.installments}</TabsTrigger>
           <TabsTrigger value="emergency">{t.emergency}</TabsTrigger>
+          <TabsTrigger value="businesses">Businesses</TabsTrigger>
           <TabsTrigger value="shop">Shop</TabsTrigger>
           <TabsTrigger value="referrals">Referrals</TabsTrigger>
           <TabsTrigger value="reviews">Reviews</TabsTrigger>
@@ -74,6 +75,10 @@ export const CustomerDashboard = () => {
 
         <TabsContent value="emergency">
           <EmergencyFund />
+        </TabsContent>
+
+        <TabsContent value="businesses">
+          <BusinessSuggestions />
         </TabsContent>
 
         <TabsContent value="shop">
