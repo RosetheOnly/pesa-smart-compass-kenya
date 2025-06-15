@@ -122,7 +122,7 @@ export const VerificationForm = ({
           <div className="flex items-center justify-center">
             <Badge variant="outline" className="text-green-600 border-green-300">
               <Clock className="h-3 w-3 mr-1" />
-              Code expires in 10 minutes
+              Code expires in 5 minutes
             </Badge>
           </div>
 
