@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, Phone, CheckCircle, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface VerificationFormProps {
   email: string;
@@ -27,6 +28,7 @@ export const VerificationForm = ({
 }: VerificationFormProps) => {
   const [otp, setOtp] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const { t } = useLanguage();
 
@@ -43,14 +45,40 @@ export const VerificationForm = ({
     }, 1000);
   };
 
-  const handleResendCode = () => {
-    // Simulate sending OTP
-    console.log(`Resending OTP to ${verificationType === "email" ? email : phone}`);
-    toast.success(`Verification code sent to ${verificationType === "email" ? email : phone}`);
-    startCooldown();
+  const sendVerificationCode = async () => {
+    setIsSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('send-verification', {
+        body: {
+          email: verificationType === "email" ? email : undefined,
+          phone: verificationType === "phone" ? phone : undefined,
+          type: verificationType,
+        },
+      });
+
+      if (error) {
+        console.error("Error sending verification code:", error);
+        toast.error("Failed to send verification code");
+        return;
+      }
+
+      console.log("Verification code sent successfully");
+      toast.success(`Verification code sent to ${verificationType === "email" ? email : phone}`);
+      startCooldown();
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Failed to send verification code");
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  const handleVerifyOTP = () => {
+  const handleResendCode = () => {
+    if (resendCooldown > 0) return;
+    sendVerificationCode();
+  };
+
+  const handleVerifyOTP = async () => {
     if (otp.length !== 6) {
       toast.error("Please enter complete verification code");
       return;
@@ -58,18 +86,39 @@ export const VerificationForm = ({
 
     setIsVerifying(true);
     
-    // Simulate OTP verification - accept any 6-digit code for demo
-    setTimeout(() => {
-      console.log("Verifying OTP:", otp);
-      toast.success("Verification successful!");
-      onVerificationComplete();
+    try {
+      const { data, error } = await supabase.functions.invoke('verify-code', {
+        body: {
+          email: verificationType === "email" ? email : undefined,
+          phone: verificationType === "phone" ? phone : undefined,
+          code: otp,
+          type: verificationType,
+        },
+      });
+
+      if (error) {
+        console.error("Error verifying code:", error);
+        toast.error("Failed to verify code");
+        return;
+      }
+
+      if (data.success) {
+        toast.success("Verification successful!");
+        onVerificationComplete();
+      } else {
+        toast.error(data.message || "Invalid verification code");
+      }
+    } catch (error) {
+      console.error("Verification error:", error);
+      toast.error("Verification failed. Please try again.");
+    } finally {
       setIsVerifying(false);
-    }, 1500);
+    }
   };
 
-  // Auto-start cooldown on component mount
+  // Auto-send verification code on component mount
   useEffect(() => {
-    startCooldown();
+    sendVerificationCode();
   }, []);
 
   return (
@@ -138,12 +187,13 @@ export const VerificationForm = ({
             <Button
               variant="link"
               onClick={handleResendCode}
-              disabled={resendCooldown > 0}
+              disabled={resendCooldown > 0 || isSending}
               className="text-blue-600 hover:text-blue-700"
             >
-              {resendCooldown > 0 
-                ? `Resend in ${resendCooldown}s` 
-                : t.resendCode
+              {isSending ? "Sending..." :
+                resendCooldown > 0 
+                  ? `Resend in ${resendCooldown}s` 
+                  : t.resendCode
               }
             </Button>
           </div>
