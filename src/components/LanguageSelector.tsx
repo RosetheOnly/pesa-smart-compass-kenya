@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/hooks/useLanguage";
 
 export const LanguageSelector = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, version, setLanguage } = useLanguage();
 
-  console.log('LanguageSelector render - current language:', language);
+  console.log('LanguageSelector render - current language:', language, 'version:', version);
 
   const handleLanguageChange = (lang: 'en' | 'sw') => {
     console.log('Button clicked for language:', lang);

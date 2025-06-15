@@ -4,6 +4,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 
 interface LanguageState {
   language: 'en' | 'sw';
+  version: number; // Force re-renders
   setLanguage: (lang: 'en' | 'sw') => void;
   t: typeof translations.en;
 }
@@ -166,25 +167,34 @@ const translations = {
 export const useLanguage = create<LanguageState>()(
   subscribeWithSelector((set, get) => ({
     language: 'en',
+    version: 0,
     t: translations.en,
     setLanguage: (lang) => {
       console.log('Language change requested:', lang);
       console.log('Current language:', get().language);
+      
+      if (get().language === lang) {
+        console.log('Language already set to:', lang);
+        return;
+      }
+      
       console.log('Will update translations to:', lang);
       
-      set(state => {
-        const newState = {
-          language: lang,
-          t: translations[lang]
-        };
-        console.log('New state set:', newState);
-        return newState;
-      });
+      const newState = {
+        language: lang,
+        version: get().version + 1, // Increment version to force re-renders
+        t: translations[lang]
+      };
+      
+      console.log('New state set:', newState);
+      set(newState);
       
       // Verify the change
       setTimeout(() => {
-        console.log('Language after update:', get().language);
-        console.log('Sample translation after update:', get().t.customer);
+        const currentState = get();
+        console.log('Language after update:', currentState.language);
+        console.log('Version after update:', currentState.version);
+        console.log('Sample translation after update:', currentState.t.customer);
       }, 100);
     },
   }))
